@@ -36,40 +36,66 @@ export default function Home() {
 
         {/* Integration Code Section */}
         <div className="bg-white rounded-lg shadow-lg p-8 mb-12">
-          <h3 className="text-2xl font-bold text-gray-900 mb-6">Integration Instructions</h3>
+          <h3 className="text-2xl font-bold text-gray-900 mb-6">Super Simple Integration</h3>
           
           <div className="space-y-6">
             <div>
-              <h4 className="text-lg font-semibold text-gray-800 mb-3">1. Backend Setup</h4>
+              <h4 className="text-lg font-semibold text-gray-800 mb-3">Add to Any Website (1 line of code)</h4>
               <div className="bg-gray-900 rounded-lg p-4 overflow-x-auto">
                 <pre className="text-green-400 text-sm">
-                  <code>{`const express = require('express');
-const cors = require('cors');
+                  <code>{`<script src="${window.location.origin}/embed.js"></script>`}</code>
+                </pre>
+              </div>
+              <p className="text-sm text-gray-600 mt-2">
+                That's it! The chatbot will automatically appear on your website.
+              </p>
+            </div>
+
+            <div>
+              <h4 className="text-lg font-semibold text-gray-800 mb-3">For Your Own Server</h4>
+              <div className="bg-gray-900 rounded-lg p-4 overflow-x-auto">
+                <pre className="text-blue-400 text-sm">
+                  <code>{`// 1. Install dependencies
+npm install express cors openai
+
+// 2. Create server.js
+const express = require('express');
 const app = express();
-
-app.use(cors());
-app.use(express.json({ limit: '10mb' }));
-
-const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+app.use(express.json());
 
 app.post('/api/chat', async (req, res) => {
-    // Rate limiting and validation
-    // OpenAI API integration
-    // Response handling
+  // Your OpenAI integration here
 });
 
-app.listen(5000);`}</code>
+app.listen(3000);
+
+// 3. Set environment variable
+OPENAI_API_KEY=your_key_here`}</code>
                 </pre>
               </div>
             </div>
 
-            <div>
-              <h4 className="text-lg font-semibold text-gray-800 mb-3">2. Environment Variables</h4>
-              <div className="bg-gray-900 rounded-lg p-4 overflow-x-auto">
-                <pre className="text-blue-400 text-sm">
-                  <code>{`# Add to your .env file
-OPENAI_API_KEY=your_openai_api_key_here`}</code>
-                </pre>
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+              <div className="flex items-start">
+                <svg className="w-5 h-5 text-blue-600 mt-0.5 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                </svg>
+                <div>
+                  <h5 className="font-semibold text-blue-900 mb-1">Ready to Use</h5>
+                  <p className="text-blue-800 text-sm mb-3">
+                    This demo is already running with a complete backend. You can copy the embed script above and test it on any website right now.
+                  </p>
+                  <a 
+                    href="/demo" 
+                    target="_blank"
+                    className="inline-flex items-center text-blue-700 hover:text-blue-800 font-medium text-sm"
+                  >
+                    View External Integration Demo
+                    <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
