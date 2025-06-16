@@ -88,10 +88,34 @@ The application uses three main entities:
 - Automatic dependency installation
 - Environment variable management through Replit secrets
 
-## Changelog
+## Recent Changes
 
-Changelog:
-- June 16, 2025. Initial setup
+- June 16, 2025: Initial setup with React frontend and Express backend
+- June 16, 2025: Added OpenAI GPT-4o integration with rate limiting and validation
+- June 16, 2025: Created minimal embeddable chatbot widget (/embed.js)
+- June 16, 2025: Added external integration demo page (/demo)
+- June 16, 2025: Implemented single-line website integration capability
+
+## Deployment Features
+
+**Embeddable Widget:**
+- Single script tag integration: `<script src="your-domain.com/embed.js"></script>`
+- Self-contained JavaScript with no external dependencies
+- Configurable positioning, colors, and styling
+- Mobile responsive design
+- Professional UI with animations
+
+**API Endpoints:**
+- `/api/chat` - OpenAI chat completions with session management
+- `/api/health` - Health check endpoint
+- `/embed.js` - Embeddable widget script
+- `/demo` - External integration demonstration
+
+**Security Features:**
+- Rate limiting (20 requests per minute per IP)
+- Input validation and sanitization (500 char limit)
+- Message history truncation (last 10 messages)
+- Error handling with user-friendly messages
 
 ## User Preferences
 
