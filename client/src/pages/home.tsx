@@ -43,7 +43,7 @@ export default function Home() {
               <h4 className="text-lg font-semibold text-gray-800 mb-3">Add to Any Website (1 line of code)</h4>
               <div className="bg-gray-900 rounded-lg p-4 overflow-x-auto">
                 <pre className="text-green-400 text-sm">
-                  <code>{`<script src="${window.location.origin}/embed.js"></script>`}</code>
+                  <code>{`<script src="https://webchat-demo.replit.app/embed.js"></script>`}</code>
                 </pre>
               </div>
               <p className="text-sm text-gray-600 mt-2">

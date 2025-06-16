@@ -10,7 +10,7 @@
   
   // Configuration - customize these values
   const CONFIG = {
-    apiEndpoint: window.location.origin + '/api/chat',
+    apiEndpoint: 'https://webchat-demo.replit.app/api/chat',
     position: 'bottom-right', // bottom-right, bottom-left, top-right, top-left
     primaryColor: '#3B82F6',
     accentColor: '#8B5CF6',
