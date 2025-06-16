@@ -91,7 +91,7 @@ The application uses three main entities:
 ## Recent Changes
 
 - June 16, 2025: Initial setup with React frontend and Express backend
-- June 16, 2025: Added OpenAI GPT-4o integration with rate limiting and validation
+- June 16, 2025: Added OpenAI GPT-4o-mini integration with rate limiting and validation
 - June 16, 2025: Created minimal embeddable chatbot widget (/embed.js)
 - June 16, 2025: Added external integration demo page (/demo)
 - June 16, 2025: Implemented single-line website integration capability

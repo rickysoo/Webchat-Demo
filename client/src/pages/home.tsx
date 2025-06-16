@@ -130,7 +130,7 @@ OPENAI_API_KEY=your_key_here`}</code>
               </svg>
             </div>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">Smart Responses</h3>
-            <p className="text-gray-600">Powered by OpenAI GPT-4o with customizable system prompts.</p>
+            <p className="text-gray-600">Powered by OpenAI GPT-4o-mini with customizable system prompts.</p>
           </div>
         </div>
 

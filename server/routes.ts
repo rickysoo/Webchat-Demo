@@ -93,7 +93,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       // Call OpenAI API
-      // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
+      // Using GPT-4o-mini for cost-effective performance as requested by user
       const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
@@ -101,7 +101,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           'Authorization': `Bearer ${OPENAI_API_KEY}`
         },
         body: JSON.stringify({
-          model: 'gpt-4o',
+          model: 'gpt-4o-mini',
           messages: [
             {
               role: 'system',
