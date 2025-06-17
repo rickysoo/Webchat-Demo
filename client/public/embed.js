@@ -186,8 +186,9 @@
           border-radius: 18px;
           border-bottom-${message.role === 'user' ? 'right' : 'left'}-radius: 6px;
           font-size: 14px;
-          line-height: 1.4;
+          line-height: 1.5;
           word-wrap: break-word;
+          white-space: pre-wrap;
           ${message.role === 'assistant' ? 'border: 1px solid #E5E7EB;' : ''}
         ">
           ${message.content}

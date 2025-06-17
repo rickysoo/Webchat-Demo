@@ -159,7 +159,7 @@ export default function ChatbotWidget() {
                     message.role === 'user'
                       ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-2xl rounded-br-md'
                       : 'bg-white text-gray-800 rounded-2xl rounded-bl-md border border-gray-200'
-                  } px-4 py-3 text-sm`}
+                  } px-4 py-3 text-sm whitespace-pre-wrap leading-relaxed`}
                 >
                   {message.content}
                 </div>
