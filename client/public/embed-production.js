@@ -67,7 +67,7 @@
           ${horizontal}: 0;
           width: ${CONFIG.widgetWidth};
           height: ${CONFIG.widgetHeight};
-          max-width: calc(100vw - 2.5rem);
+          max-width: calc(100vw - 5rem);
           background: white;
           border-radius: 16px;
           box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
