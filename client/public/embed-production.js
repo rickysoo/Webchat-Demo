@@ -64,8 +64,9 @@
           position: absolute;
           ${vertical === 'bottom' ? 'bottom' : 'top'}: 70px;
           ${horizontal}: 0;
-          width: ${CONFIG.widgetWidth};
+          width: min(${CONFIG.widgetWidth}, calc(100vw - 40px));
           height: ${CONFIG.widgetHeight};
+          max-width: calc(100vw - 40px);
           transform: translateX(min(0px, calc(100vw - 384px - 40px)));
           background: white;
           border-radius: 16px;

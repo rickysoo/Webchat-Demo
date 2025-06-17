@@ -135,7 +135,14 @@ export default function ChatbotWidget() {
 
       {/* Chat Widget */}
       {isOpen && (
-        <div className="absolute bottom-20 right-0 w-96 h-[600px] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden transform animate-in slide-in-from-bottom-2 fade-in duration-300 sm:w-[calc(100vw-2rem)] sm:h-[calc(100vh-8rem)] sm:bottom-20 sm:right-0 sm:left-4" style={{ transform: 'translateX(min(0px, calc(100vw - 384px - 40px)))' }}>
+        <div 
+          className="absolute bottom-20 right-0 w-96 h-[600px] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden transform animate-in slide-in-from-bottom-2 fade-in duration-300"
+          style={{ 
+            transform: 'translateX(min(0px, calc(100vw - 384px - 40px)))',
+            maxWidth: 'calc(100vw - 40px)',
+            width: 'min(384px, calc(100vw - 40px))'
+          }}
+        >
           
           {/* Header */}
           <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-5 flex items-center justify-between">
