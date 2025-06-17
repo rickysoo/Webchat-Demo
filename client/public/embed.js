@@ -35,10 +35,9 @@
       <div id="ai-chatbot-container" style="
         position: fixed;
         ${vertical}: 20px;
-        ${horizontal}: 64px;
+        ${horizontal}: 20px;
         z-index: 999999;
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-        max-width: calc(100vw - 5rem);
       ">
         <!-- Toggle Button -->
         <div id="ai-chatbot-toggle" style="
@@ -64,10 +63,10 @@
         <div id="ai-chatbot-widget" style="
           position: absolute;
           ${vertical === 'bottom' ? 'bottom' : 'top'}: 70px;
-          ${horizontal}: -48px;
+          ${horizontal}: 0;
           width: ${CONFIG.widgetWidth};
           height: ${CONFIG.widgetHeight};
-          max-width: calc(100vw - 5rem);
+          transform: translateX(min(0px, calc(100vw - 384px - 40px)));
           background: white;
           border-radius: 16px;
           box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
