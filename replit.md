@@ -96,6 +96,9 @@ The application uses three main entities:
 - June 16, 2025: Added external integration demo page (/demo)
 - June 16, 2025: Implemented single-line website integration capability
 - June 16, 2025: Added markdown rendering support for formatted AI responses
+- June 17, 2025: Combined main page, demo, and documentation into single comprehensive page
+- June 17, 2025: Fixed chatbot positioning issues to ensure widget stays within browser viewport bounds
+- June 17, 2025: Increased chatbot button size from 60px to 64px for better visibility
 
 ## Deployment Features
 
