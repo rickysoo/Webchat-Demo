@@ -162,6 +162,15 @@
     `;
   }
 
+  // Simple markdown renderer
+  function renderMarkdown(text) {
+    return text
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.*?)\*/g, '<em>$1</em>')
+      .replace(/`(.*?)`/g, '<code style="background: #f3f4f6; padding: 2px 4px; border-radius: 3px; font-family: monospace;">$1</code>')
+      .replace(/\n/g, '<br>');
+  }
+
   // Render messages
   function renderMessages() {
     const container = document.getElementById('ai-chatbot-messages');
@@ -176,6 +185,10 @@
         align-self: ${message.role === 'user' ? 'flex-end' : 'flex-start'};
       `;
       
+      const renderedContent = message.role === 'assistant' 
+        ? renderMarkdown(message.content)
+        : message.content.replace(/\n/g, '<br>');
+      
       messageDiv.innerHTML = `
         <div style="
           background: ${message.role === 'user' 
@@ -188,10 +201,9 @@
           font-size: 14px;
           line-height: 1.5;
           word-wrap: break-word;
-          white-space: pre-wrap;
-          ${message.role === 'assistant' ? 'border: 1px solid #E5E7EB;' : ''}
+          ${message.role === 'assistant' ? 'border: 1px solid #E5E7EB;' : 'white-space: pre-wrap;'}
         ">
-          ${message.content}
+          ${renderedContent}
         </div>
       `;
       

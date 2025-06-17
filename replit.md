@@ -95,6 +95,7 @@ The application uses three main entities:
 - June 16, 2025: Created minimal embeddable chatbot widget (/embed.js)
 - June 16, 2025: Added external integration demo page (/demo)
 - June 16, 2025: Implemented single-line website integration capability
+- June 16, 2025: Added markdown rendering support for formatted AI responses
 
 ## Deployment Features
 

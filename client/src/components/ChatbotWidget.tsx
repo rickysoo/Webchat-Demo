@@ -3,6 +3,15 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { MessageCircle, X, Send } from 'lucide-react';
 
+// Simple markdown renderer
+function renderMarkdown(text: string): string {
+  return text
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/`(.*?)`/g, '<code style="background: #f3f4f6; padding: 2px 4px; border-radius: 3px; font-family: monospace;">$1</code>')
+    .replace(/\n/g, '<br>');
+}
+
 interface Message {
   role: 'user' | 'assistant';
   content: string;
@@ -159,10 +168,13 @@ export default function ChatbotWidget() {
                     message.role === 'user'
                       ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-2xl rounded-br-md'
                       : 'bg-white text-gray-800 rounded-2xl rounded-bl-md border border-gray-200'
-                  } px-4 py-3 text-sm whitespace-pre-wrap leading-relaxed`}
-                >
-                  {message.content}
-                </div>
+                  } px-4 py-3 text-sm leading-relaxed`}
+                  dangerouslySetInnerHTML={{
+                    __html: message.role === 'assistant' 
+                      ? renderMarkdown(message.content)
+                      : message.content.replace(/\n/g, '<br>')
+                  }}
+                />
               </div>
             ))}
             
