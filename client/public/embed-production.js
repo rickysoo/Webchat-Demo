@@ -38,6 +38,7 @@
         ${horizontal}: 20px;
         z-index: 999999;
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        max-width: calc(100vw - 2.5rem);
       ">
         <!-- Toggle Button -->
         <div id="ai-chatbot-toggle" style="
@@ -66,6 +67,7 @@
           ${horizontal}: 0;
           width: ${CONFIG.widgetWidth};
           height: ${CONFIG.widgetHeight};
+          max-width: calc(100vw - 2.5rem);
           background: white;
           border-radius: 16px;
           box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
