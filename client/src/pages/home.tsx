@@ -85,16 +85,29 @@ OPENAI_API_KEY=your_key_here`}</code>
                   <p className="text-blue-800 text-sm mb-3">
                     This demo is already running with a complete backend. You can copy the embed script above and test it on any website right now.
                   </p>
-                  <a 
-                    href="/demo" 
-                    target="_blank"
-                    className="inline-flex items-center text-blue-700 hover:text-blue-800 font-medium text-sm"
-                  >
-                    View External Integration Demo
-                    <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                    </svg>
-                  </a>
+                  <div className="space-y-2">
+                    <a 
+                      href="/demo" 
+                      target="_blank"
+                      className="inline-flex items-center text-blue-700 hover:text-blue-800 font-medium text-sm"
+                    >
+                      View External Integration Demo
+                      <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                    </a>
+                    <br />
+                    <a 
+                      href="/docs" 
+                      target="_blank"
+                      className="inline-flex items-center text-blue-700 hover:text-blue-800 font-medium text-sm"
+                    >
+                      Complete Setup Documentation
+                      <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>

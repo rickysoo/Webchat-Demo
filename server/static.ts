@@ -18,4 +18,9 @@ export function serveEmbedScript(app: Express) {
   app.get('/demo', (req, res) => {
     res.sendFile(join(process.cwd(), 'client', 'public', 'demo.html'));
   });
+
+  // Serve README documentation
+  app.get('/docs', (req, res) => {
+    res.sendFile(join(process.cwd(), 'README.md'));
+  });
 }
