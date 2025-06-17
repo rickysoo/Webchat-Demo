@@ -35,7 +35,7 @@
       <div id="ai-chatbot-container" style="
         position: fixed;
         ${vertical}: 20px;
-        ${horizontal}: 20px;
+        ${horizontal}: 64px;
         z-index: 999999;
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
         max-width: calc(100vw - 5rem);
@@ -64,7 +64,7 @@
         <div id="ai-chatbot-widget" style="
           position: absolute;
           ${vertical === 'bottom' ? 'bottom' : 'top'}: 70px;
-          ${horizontal}: 0;
+          ${horizontal}: -48px;
           width: ${CONFIG.widgetWidth};
           height: ${CONFIG.widgetHeight};
           max-width: calc(100vw - 5rem);
