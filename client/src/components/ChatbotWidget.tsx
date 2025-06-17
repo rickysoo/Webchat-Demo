@@ -120,11 +120,11 @@ export default function ChatbotWidget() {
   );
 
   return (
-    <div className="fixed bottom-5 right-5 z-50 font-sans max-w-[calc(100vw-2.5rem)]">
+    <div className="fixed bottom-5 right-5 z-50 font-sans" style={{ maxWidth: 'calc(100vw - 5rem)' }}>
       {/* Toggle Button */}
       <div 
         onClick={() => setIsOpen(!isOpen)}
-        className="w-15 h-15 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white cursor-pointer shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+        className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white cursor-pointer shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
       >
         {isOpen ? (
           <X className="w-6 h-6" />
@@ -135,7 +135,7 @@ export default function ChatbotWidget() {
 
       {/* Chat Widget */}
       {isOpen && (
-        <div className="absolute bottom-20 right-0 w-96 h-[600px] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden transform animate-in slide-in-from-bottom-2 fade-in duration-300 max-w-[calc(100vw-2.5rem)] sm:w-[calc(100vw-2rem)] sm:h-[calc(100vh-8rem)] sm:bottom-20 sm:right-0 sm:left-4">
+        <div className="absolute bottom-20 right-0 w-96 h-[600px] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden transform animate-in slide-in-from-bottom-2 fade-in duration-300 sm:w-[calc(100vw-2rem)] sm:h-[calc(100vh-8rem)] sm:bottom-20 sm:right-0 sm:left-4" style={{ maxWidth: 'calc(100vw - 5rem)' }}>
           
           {/* Header */}
           <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-5 flex items-center justify-between">

@@ -14,7 +14,7 @@
     position: 'bottom-right', // bottom-right, bottom-left, top-right, top-left
     primaryColor: '#3B82F6',
     accentColor: '#8B5CF6',
-    buttonSize: '60px',
+    buttonSize: '64px',
     widgetWidth: '380px',
     widgetHeight: '600px',
     greeting: '👋 Hi! I\'m your AI assistant. How can I help you today?'
@@ -38,7 +38,7 @@
         ${horizontal}: 20px;
         z-index: 999999;
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-        max-width: calc(100vw - 2.5rem);
+        max-width: calc(100vw - 5rem);
       ">
         <!-- Toggle Button -->
         <div id="ai-chatbot-toggle" style="
