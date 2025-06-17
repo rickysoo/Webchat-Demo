@@ -1,0 +1,353 @@
+// API Integration Code
+import OpenAI from 'openai';
+
+const client = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+
+const response = await client.chat.completions.create({
+  model: "gpt-4.1-mini", // or gpt-4o for faster responses
+  messages: [
+    {
+      role: "system",
+      content: "You are a helpful customer service assistant for [Your Company]."
+    },
+    {
+      role: "user",
+      content: userMessage
+    }
+  ],
+  max_tokens: 150,
+  temperature: 0.7,
+});
+
+
+//Installation and Setup Updates
+npm install openai@^5.3.0
+# or
+yarn add openai@^5.3.0
+
+// Assistants API Integration
+
+// Create an Assistant (recommended for persistent chatbots)
+const assistant = await client.beta.assistants.create({
+  name: "Customer Support Bot",
+  instructions: "You are a customer support assistant for [Company]. Be helpful, professional, and concise.",
+  model: "gpt-4.1-mini",
+  tools: [{ type: "code_interpreter" }]
+});
+
+// Create a Thread for conversation
+const thread = await client.beta.threads.create();
+
+// Add user message to thread
+await client.beta.threads.messages.create(thread.id, {
+  role: "user",
+  content: userMessage
+});
+
+// Run the assistant
+const run = await client.beta.threads.runs.create(thread.id, {
+  assistant_id: assistant.id
+});
+
+// Server-Side Implementation
+import express from 'express';
+import OpenAI from 'openai';
+import rateLimit from 'express-rate-limit';
+
+const app = express();
+const client = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+
+// Rate limiting for API protection
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100 // limit each IP to 100 requests per windowMs
+});
+
+app.use(limiter);
+app.use(express.json());
+
+app.post('/chat', async (req, res) => {
+  try {
+    const { message, conversationHistory = [] } = req.body;
+    
+    const messages = [
+      {
+        role: "system",
+        content: "You are a helpful customer service assistant."
+      },
+      ...conversationHistory,
+      {
+        role: "user",
+        content: message
+      }
+    ];
+
+    const response = await client.chat.completions.create({
+      model: "gpt-4.1-mini",
+      messages: messages,
+      max_tokens: 150,
+      temperature: 0.7,
+      stream: true // Enable streaming for better UX
+    });
+
+    // Handle streaming response
+    res.writeHead(200, {
+      'Content-Type': 'text/plain',
+      'Transfer-Encoding': 'chunked'
+    });
+
+    for await (const chunk of response) {
+      const content = chunk.choices[0]?.delta?.content || '';
+      if (content) {
+        res.write(content);
+      }
+    }
+    res.end();
+
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Something went wrong' });
+  }
+});
+
+// Frontend Updates
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Chatbot</title>
+    <style>
+        .chat-container {
+            max-width: 600px;
+            margin: 0 auto;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .chat-messages {
+            height: 400px;
+            overflow-y: auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        .message {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .user-message {
+            background-color: #007bff;
+            color: white;
+            margin-left: 20%;
+        }
+        .bot-message {
+            background-color: white;
+            border: 1px solid #ddd;
+            margin-right: 20%;
+        }
+        .typing-indicator {
+            display: none;
+            font-style: italic;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-messages" id="chatMessages">
+            <div class="message bot-message">
+                Hello! How can I help you today?
+            </div>
+        </div>
+        <div class="typing-indicator" id="typingIndicator">
+            AI is typing...
+        </div>
+        <div class="chat-input">
+            <input type="text" id="messageInput" placeholder="Type your message...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        let conversationHistory = [];
+
+        async function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+
+            // Add user message to chat
+            addMessage(message, 'user');
+            input.value = '';
+
+            // Show typing indicator
+            document.getElementById('typingIndicator').style.display = 'block';
+
+            try {
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: message,
+                        conversationHistory: conversationHistory
+                    })
+                });
+
+                if (response.ok) {
+                    const reader = response.body.getReader();
+                    const decoder = new TextDecoder();
+                    let botResponse = '';
+                    
+                    // Create bot message element for streaming
+                    const botMessageDiv = document.createElement('div');
+                    botMessageDiv.className = 'message bot-message';
+                    document.getElementById('chatMessages').appendChild(botMessageDiv);
+
+                    while (true) {
+                        const { done, value } = await reader.read();
+                        if (done) break;
+                        
+                        const chunk = decoder.decode(value);
+                        botResponse += chunk;
+                        botMessageDiv.textContent = botResponse;
+                        
+                        // Auto-scroll to bottom
+                        document.getElementById('chatMessages').scrollTop = 
+                            document.getElementById('chatMessages').scrollHeight;
+                    }
+
+                    // Update conversation history
+                    conversationHistory.push(
+                        { role: 'user', content: message },
+                        { role: 'assistant', content: botResponse }
+                    );
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                addMessage('Sorry, something went wrong. Please try again.', 'bot');
+            } finally {
+                document.getElementById('typingIndicator').style.display = 'none';
+            }
+        }
+
+        function addMessage(message, sender) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}-message`;
+            messageDiv.textContent = message;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Allow Enter key to send message
+        document.getElementById('messageInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+// Security and Best Practices
+// Environment variables for API keys
+process.env.OPENAI_API_KEY = 'your-api-key-here';
+
+// Input validation and sanitization
+function validateInput(message) {
+    if (!message || typeof message !== 'string') {
+        throw new Error('Invalid message format');
+    }
+    
+    if (message.length > 1000) {
+        throw new Error('Message too long');
+    }
+    
+    // Remove potentially harmful content
+    return message.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+}
+
+// Rate limiting per user
+const userRateLimit = new Map();
+
+function checkUserRateLimit(userId) {
+    const now = Date.now();
+    const userRequests = userRateLimit.get(userId) || [];
+    
+    // Remove requests older than 1 minute
+    const recentRequests = userRequests.filter(time => now - time < 60000);
+    
+    if (recentRequests.length >= 10) {
+        throw new Error('Rate limit exceeded');
+    }
+    
+    recentRequests.push(now);
+    userRateLimit.set(userId, recentRequests);
+}
+
+
+// Performance Optimization
+// Streaming responses for better UX
+const stream = await client.chat.completions.create({
+    model: "gpt-4.1-mini",
+    messages: messages,
+    stream: true,
+    max_tokens: 150
+});
+
+// Response caching for common queries
+const cache = new Map();
+
+function getCachedResponse(query) {
+    const cacheKey = query.toLowerCase().trim();
+    return cache.get(cacheKey);
+}
+
+function setCachedResponse(query, response) {
+    const cacheKey = query.toLowerCase().trim();
+    cache.set(cacheKey, response);
+    
+    // Limit cache size
+    if (cache.size > 1000) {
+        const firstKey = cache.keys().next().value;
+        cache.delete(firstKey);
+    }
+}
+
+
+// Testing and Monitoring
+// Unit tests for API integration
+describe('ChatGPT Integration', () => {
+    test('should handle user messages correctly', async () => {
+        const response = await client.chat.completions.create({
+            model: "gpt-4.1-mini",
+            messages: [{ role: "user", content: "Hello" }],
+            max_tokens: 50
+        });
+        
+        expect(response.choices[0].message.content).toBeTruthy();
+    });
+    
+    test('should handle rate limiting', async () => {
+        // Test rate limiting implementation
+    });
+});
+
+// Logging and monitoring
+function logChatInteraction(userId, message, response, duration) {
+    console.log({
+        timestamp: new Date().toISOString(),
+        userId,
+        messageLength: message.length,
+        responseLength: response.length,
+        duration,
+        model: 'gpt-4.1-mini'
+    });
+}
