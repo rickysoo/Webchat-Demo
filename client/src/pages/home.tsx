@@ -205,12 +205,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Rate limiting
+// Rate limiting (20 requests per minute per IP)
 const rateLimitStore = new Map();
 function rateLimit(req, res, next) {
-  const ip = req.ip || 'unknown';
+  const ip = req.ip || req.connection.remoteAddress || 'unknown';
   const now = Date.now();
-  const windowMs = 60000;
+  const windowMs = 60000; // 1 minute
   const maxRequests = 20;
 
   if (!rateLimitStore.has(ip)) {
@@ -226,7 +226,9 @@ function rateLimit(req, res, next) {
   }
 
   if (userLimit.count >= maxRequests) {
-    return res.status(429).json({ error: 'Too many requests' });
+    return res.status(429).json({ 
+      error: 'Too many requests. Please wait a moment.' 
+    });
   }
 
   userLimit.count++;
@@ -237,6 +239,11 @@ app.post('/api/chat', rateLimit, async (req, res) => {
   try {
     const { messages, sessionId } = req.body;
     
+    if (!messages || !Array.isArray(messages)) {
+      return res.status(400).json({ error: 'Invalid messages format' });
+    }
+    
+    // Limit and sanitize messages (last 10, max 1000 chars each)
     const sanitizedMessages = messages.slice(-10).map(msg => ({
       role: msg.role,
       content: String(msg.content).slice(0, 1000)
@@ -249,11 +256,11 @@ app.post('/api/chat', rateLimit, async (req, res) => {
         'Authorization': \`Bearer \${process.env.OPENAI_API_KEY}\`
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: 'gpt-4o-mini', // Cost-efficient model
         messages: [
           {
             role: 'system',
-            content: 'You are a helpful customer service assistant. Be concise and professional.'
+            content: 'You are a helpful customer service assistant. Be concise, friendly, and professional. Keep responses under 200 words.'
           },
           ...sanitizedMessages
         ],
@@ -262,6 +269,12 @@ app.post('/api/chat', rateLimit, async (req, res) => {
       })
     });
 
+    if (!response.ok) {
+      return res.status(500).json({ 
+        error: 'AI service temporarily unavailable' 
+      });
+    }
+
     const data = await response.json();
     res.json({
       message: data.choices[0].message.content,
@@ -269,11 +282,15 @@ app.post('/api/chat', rateLimit, async (req, res) => {
     });
 
   } catch (error) {
-    res.status(500).json({ error: 'Service unavailable' });
+    console.error('Chat error:', error);
+    res.status(500).json({ 
+      error: 'Service temporarily unavailable' 
+    });
   }
 });
 
-app.listen(3000, () => console.log('Server running on port 3000'));`}</code>
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(\`Server running on port \${PORT}\`));`}</code>
                 </pre>
               </div>
             </div>
